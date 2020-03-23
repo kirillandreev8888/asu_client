@@ -3,6 +3,8 @@ package com.example.asu;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.example.asu.Adaprers.SectionsPageAdapter;
+import com.example.asu.Fragments.Tab1Fragment;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private SectionsPageAdapter mSectionsPageAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +30,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,6 +47,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+
+        mViewPager = (ViewPager) findViewById(R.id.container);
+
+        setupViewPager(mViewPager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
@@ -80,22 +96,27 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_profile) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_settings) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(Tab1Fragment.createFragment(1), getString(R.string.tab_text_1));
+        adapter.addFragment(Tab1Fragment.createFragment(2), getString(R.string.tab_text_2));
+        adapter.addFragment(Tab1Fragment.createFragment(3), getString(R.string.tab_text_3));
+        adapter.addFragment(Tab1Fragment.createFragment(4), getString(R.string.tab_text_4));
+        adapter.addFragment(Tab1Fragment.createFragment(5), getString(R.string.tab_text_5));
+        adapter.addFragment(Tab1Fragment.createFragment(6), getString(R.string.tab_text_6));
+
+
+        viewPager.setAdapter(adapter);
     }
 }
