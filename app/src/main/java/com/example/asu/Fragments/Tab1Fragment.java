@@ -1,6 +1,5 @@
 package com.example.asu.Fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.asu.Adaprers.recyclerAdapter;
+import com.example.asu.Adapters.recyclerAdapter;
 import com.example.asu.R;
 
 import java.util.Random;

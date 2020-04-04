@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:id="@+id/recyclerlayout"
     android:background="?android:selectableItemBackground">
@@ -10,15 +10,15 @@
         android:id="@+id/recyclerImage"
         android:layout_width="100dp"
         android:padding="8dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="10dp">
 
         <TextView
-            android:layout_marginTop="10dp"
             android:id="@+id/recyclerText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,15 +26,34 @@
             android:textAlignment="textStart"
             android:textAppearance="@android:style/TextAppearance.Large"
             android:textSize="32sp" />
-
-        <TextView
-            android:paddingLeft="5dp"
-            android:id="@+id/recyclerText2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Какая-то аудитория"
-            android:textAlignment="textStart"
-            android:textAppearance="@android:style/TextAppearance.Large" />
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
+
+            <TextView
+                android:paddingLeft="5dp"
+                android:id="@+id/recyclerText2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Аудитория"
+                android:textAlignment="textStart"
+                android:textAppearance="@android:style/TextAppearance.Large" />
+            <TextView
+                android:paddingLeft="5dp"
+                android:id="@+id/recyclerText3"
+                android:layout_width="wrap_content"
+                android:minWidth="60dp"
+                android:layout_height="wrap_content"
+                android:text="Тип"
+                android:textAlignment="textStart"
+                android:textAppearance="@android:style/TextAppearance.Large" />
+
+        </LinearLayout>
+
+
 
 
     </LinearLayout>

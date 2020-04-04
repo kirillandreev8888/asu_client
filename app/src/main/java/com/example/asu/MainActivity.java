@@ -1,26 +1,29 @@
 package com.example.asu;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.asu.Adaprers.SectionsPageAdapter;
+import com.example.asu.Adapters.SectionsPageAdapter;
+import com.example.asu.RowDataGateway.DBinitter;
 import com.example.asu.Fragments.Tab1Fragment;
+import com.example.asu.RowDataGateway.Lesson;
+import com.example.asu.RowDataGateway.User;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SectionsPageAdapter mSectionsPageAdapter;
+    //private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        //mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
 
@@ -56,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        DBinitter dBinitter = new DBinitter(this);
     }
 
     @Override
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
 
@@ -97,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_settings) {
 
         }
