@@ -26,6 +26,8 @@ public class Lesson extends RowDataGatewayBase {
     public Lesson() {
     }
 
+    //requests
+
     @Override
     public void insert(){
         ContentValues contentValues = new ContentValues();
@@ -55,10 +57,44 @@ public class Lesson extends RowDataGatewayBase {
         db.delete("Lesson", "_id = ?", new String[]{String.valueOf(this._id)});
     }
 
+    public static void deleteAll(){
+        db.delete("Lesson", null, null);
+    }
+
     public static List<Lesson> findAll(){
         List<Lesson> lessons = new ArrayList<>();
 
         Cursor cursor = db.query("Lesson", null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()){
+            int iid = cursor.getColumnIndex("_id");
+            int iname = cursor.getColumnIndex("name");
+            int iclassroom = cursor.getColumnIndex("classroom");
+            int itype = cursor.getColumnIndex("type");
+            int itime = cursor.getColumnIndex("time");
+            int iday = cursor.getColumnIndex("day");
+
+            do {
+                Lesson temp = new Lesson(
+                        cursor.getString(iname),
+                        cursor.getString(iclassroom),
+                        cursor.getString(itype),
+                        cursor.getInt(itime),
+                        cursor.getInt(iday));
+                temp._id = cursor.getInt(iid);
+                lessons.add(temp);
+            }while (cursor.moveToNext());
+        }else
+            lessons = null;
+
+        cursor.close();
+        return lessons;
+    }
+
+    public static List<Lesson> findByDay(int day){
+        List<Lesson> lessons = new ArrayList<>();
+
+        Cursor cursor = db.query("Lesson", null, "day = ?", new String[] {String.valueOf(day)}, null, null, null);
 
         if (cursor.moveToFirst()){
             int iid = cursor.getColumnIndex("_id");

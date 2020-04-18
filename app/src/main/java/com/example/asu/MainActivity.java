@@ -1,5 +1,6 @@
 package com.example.asu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,19 +13,38 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.asu.Adapters.SectionsPageAdapter;
+import com.example.asu.DomainModel.DMGroup;
 import com.example.asu.RowDataGateway.DBinitter;
 import com.example.asu.Fragments.Tab1Fragment;
 import com.example.asu.RowDataGateway.Lesson;
 import com.example.asu.RowDataGateway.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
+    public static OkHttpClient client = new OkHttpClient();
+    public static final String BASE_URL = "http://10.0.2.2:8000/groups/";
+    public static boolean reloadRequired = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        reloadRequired = false;
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -55,12 +77,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mViewPager = (ViewPager) findViewById(R.id.container);
 
-        setupViewPager(mViewPager);
+        //setupViewPager(mViewPager);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         DBinitter dBinitter = new DBinitter(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupViewPager(mViewPager);
     }
 
     @Override
@@ -88,8 +117,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
+        if (id == R.id.action_switch_week) {
+            int current = mViewPager.getCurrentItem();
+            int count = mViewPager.getAdapter().getCount()/2;
+//            Toast.makeText(getApplicationContext(), ""+count, Toast.LENGTH_SHORT).show();
+            if (current<count)
+                mViewPager.setCurrentItem(current+count);
+            else
+                mViewPager.setCurrentItem(current-count);
             return true;
         }
 
@@ -103,7 +138,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
 
         }
@@ -121,6 +157,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.addFragment(Tab1Fragment.createFragment(4), getString(R.string.tab_text_4));
         adapter.addFragment(Tab1Fragment.createFragment(5), getString(R.string.tab_text_5));
         adapter.addFragment(Tab1Fragment.createFragment(6), getString(R.string.tab_text_6));
+        adapter.addFragment(Tab1Fragment.createFragment(11), getString(R.string.tab_text_11));
+        adapter.addFragment(Tab1Fragment.createFragment(12), getString(R.string.tab_text_12));
+        adapter.addFragment(Tab1Fragment.createFragment(13), getString(R.string.tab_text_13));
+        adapter.addFragment(Tab1Fragment.createFragment(14), getString(R.string.tab_text_14));
+        adapter.addFragment(Tab1Fragment.createFragment(15), getString(R.string.tab_text_15));
+        adapter.addFragment(Tab1Fragment.createFragment(16), getString(R.string.tab_text_16));
 
 
         viewPager.setAdapter(adapter);

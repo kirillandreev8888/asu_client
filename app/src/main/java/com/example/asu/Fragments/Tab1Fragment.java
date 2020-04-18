@@ -11,8 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.asu.Adapters.recyclerAdapter;
+import com.example.asu.DomainModel.DMLesson;
 import com.example.asu.R;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
 public class Tab1Fragment extends Fragment {
@@ -29,16 +33,14 @@ public class Tab1Fragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        int num=(new Random()).nextInt(3)+1;
-        int numpar=(new Random()).nextInt(3)+1;
-        String[] test = new String[num+1];
-
-        for (int i = 0; i<=num; i++){
-            test[i] = "Day: "+day+"; position "+(i+1);
-
-        }
-        recyclerView.setAdapter(new recyclerAdapter(getContext(), test, numpar));
+        List<DMLesson> list = DMLesson.findByDay(day);
+        Collections.sort(list, new Comparator<DMLesson>() {
+            @Override
+            public int compare(DMLesson o1, DMLesson o2) {
+                return o1.getTime()-o2.getTime();
+            }
+        });
+        recyclerView.setAdapter(new recyclerAdapter(list, getContext()));
 
         return view;
     }

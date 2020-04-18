@@ -15,4 +15,12 @@
     <string name="tab_text_4">Четверг</string>
     <string name="tab_text_5">Пятница</string>
     <string name="tab_text_6">Суббота</string>
+    <string name="tab_text_11">Понедельник (зн)</string>
+    <string name="tab_text_12">Вторник (зн)</string>
+    <string name="tab_text_13">Среда (зн)</string>
+    <string name="tab_text_14">Четверг (зн)</string>
+    <string name="tab_text_15">Пятница (зн)</string>
+    <string name="tab_text_16">Суббота (зн)</string>
+    <string name="week_switch_text"><![CDATA[ЧС <-> ЗН]]></string>
+
 </resources>
