@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,17 @@ public class Tab1Fragment extends Fragment {
         View view =inflater.inflate(R.layout.tab1_fragment, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview1);
+
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        Log.i("QWE", "Day: "+String.valueOf(day));
         List<DMLesson> list = DMLesson.findByDay(day);
         Collections.sort(list, new Comparator<DMLesson>() {
             @Override
@@ -41,11 +52,9 @@ public class Tab1Fragment extends Fragment {
             }
         });
         recyclerView.setAdapter(new recyclerAdapter(list, getContext()));
-
-        return view;
     }
 
-//    public Tab1Fragment() {
+    //    public Tab1Fragment() {
 //        super();
 //    }
 

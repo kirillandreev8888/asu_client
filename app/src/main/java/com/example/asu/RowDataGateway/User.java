@@ -20,7 +20,7 @@ public class User extends RowDataGatewayBase {
     public User() {
     }
 
-    public void insert(){
+    public void insert() {
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", this.username);
         contentValues.put("password", this.password);
@@ -33,7 +33,7 @@ public class User extends RowDataGatewayBase {
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", this.username);
         contentValues.put("password", this.password);
-        db.update("User", contentValues, "_id = ?", new String[] {String.valueOf(this._id)});
+        db.update("User", contentValues, "_id = ?", new String[]{String.valueOf(this._id)});
     }
 
     @Override
@@ -41,12 +41,12 @@ public class User extends RowDataGatewayBase {
         db.delete("User", "_id = ?", new String[]{String.valueOf(this._id)});
     }
 
-    public static List<User> findAll(){
+    public static List<User> findAll() {
         List<User> users = new ArrayList<>();
 
         Cursor cursor = db.query("User", null, null, null, null, null, null);
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             int iid = cursor.getColumnIndex("_id");
             int iusername = cursor.getColumnIndex("username");
             int ipassword = cursor.getColumnIndex("password");
@@ -58,8 +58,8 @@ public class User extends RowDataGatewayBase {
                 );
                 temp._id = cursor.getInt(iid);
                 users.add(temp);
-            }while (cursor.moveToNext());
-        }else
+            } while (cursor.moveToNext());
+        } else
             users = null;
 
         cursor.close();

@@ -93,7 +93,6 @@ public class recyclerSearchGroupsAdapter extends RecyclerView.Adapter<RecyclerVi
                         Instrumentation inst = new Instrumentation();
                         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
                         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-                        MainActivity.reloadRequired = true;
                     }
                 });
             }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.asu.Adapters.SectionsPageAdapter;
 import com.example.asu.DomainModel.DMGroup;
+import com.example.asu.DomainModel.DMSetting;
 import com.example.asu.RowDataGateway.DBinitter;
 import com.example.asu.Fragments.Tab1Fragment;
 import com.example.asu.RowDataGateway.Lesson;
@@ -41,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
+    private TabLayout tabLayout;
     public static OkHttpClient client = new OkHttpClient();
     public static final String BASE_URL = "http://10.0.2.2:8000/groups/";
-    public static boolean reloadRequired = false;
 
 
     @Override
@@ -52,17 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        reloadRequired = false;
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,12 +65,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+
 
         //setupViewPager(mViewPager);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+
 
         DBinitter dBinitter = new DBinitter(this);
 
@@ -89,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        tabLayout.setupWithViewPager(mViewPager);
         setupViewPager(mViewPager);
     }
 
@@ -119,12 +111,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_switch_week) {
             int current = mViewPager.getCurrentItem();
-            int count = mViewPager.getAdapter().getCount()/2;
+            int count = mViewPager.getAdapter().getCount() / 2;
 //            Toast.makeText(getApplicationContext(), ""+count, Toast.LENGTH_SHORT).show();
-            if (current<count)
-                mViewPager.setCurrentItem(current+count);
+            if (current < count)
+                mViewPager.setCurrentItem(current + count);
             else
-                mViewPager.setCurrentItem(current-count);
+                mViewPager.setCurrentItem(current - count);
             return true;
         }
 
@@ -141,7 +133,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {
-
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -151,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
+
         adapter.addFragment(Tab1Fragment.createFragment(1), getString(R.string.tab_text_1));
         adapter.addFragment(Tab1Fragment.createFragment(2), getString(R.string.tab_text_2));
         adapter.addFragment(Tab1Fragment.createFragment(3), getString(R.string.tab_text_3));
@@ -163,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.addFragment(Tab1Fragment.createFragment(14), getString(R.string.tab_text_14));
         adapter.addFragment(Tab1Fragment.createFragment(15), getString(R.string.tab_text_15));
         adapter.addFragment(Tab1Fragment.createFragment(16), getString(R.string.tab_text_16));
-
 
         viewPager.setAdapter(adapter);
     }

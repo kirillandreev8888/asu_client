@@ -9,7 +9,7 @@ import com.example.asu.RowDataGateway.RowDataGatewayBase;
 
 public class DBinitter extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "asuDB";
 
 
@@ -36,12 +36,20 @@ public class DBinitter extends SQLiteOpenHelper {
                 "password text" +
                 ")"
         );
+
+        db.execSQL("create table Setting (" +
+                "_id integer primary key," +
+                "name text unique," +
+                "value text" +
+                ")"
+        );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists Lesson");
         db.execSQL("drop table if exists User");
+        db.execSQL("drop table if exists Setting");
 
         onCreate(db);
     }
