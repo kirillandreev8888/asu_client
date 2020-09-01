@@ -2,9 +2,13 @@ package com.example.asu;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,6 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.asu.Adapters.SectionsPageAdapter;
 import com.example.asu.RowDataGateway.DBinitter;
@@ -46,15 +52,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
-
-
-
         //setupViewPager(mViewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-
         DBinitter dBinitter = new DBinitter(this);
+
+        ImageButton weekSwitcher = findViewById(R.id.weekSwitcher);
+        weekSwitcher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int current = mViewPager.getCurrentItem();
+                int count = mViewPager.getAdapter().getCount() / 2;
+                if (current < count)
+                    mViewPager.setCurrentItem(current + count);
+                else
+                    mViewPager.setCurrentItem(current - count);
+            }
+        });
 
     }
 
@@ -76,12 +91,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
