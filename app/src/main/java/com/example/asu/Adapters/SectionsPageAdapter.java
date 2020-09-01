@@ -19,7 +19,8 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
     public void addFragment(Tab1Fragment fragment, String title){
         int day = fragment.day%10;
             String daystr = "showday"+String.valueOf(day);
-            if (DMSetting.findOne(daystr).checkShowDaySetting()){
+            DMSetting dmSetting = DMSetting.findOne(daystr);
+            if (dmSetting.checkShowDaySetting() || !dmSetting.exists()){
                 Fragment fr = new Tab1Fragment();
                 ((Tab1Fragment) fr).day = day;
                 mFragmentList.add(fragment);
