@@ -2,41 +2,23 @@ package com.example.asu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import com.google.android.material.tabs.TabLayout;
+import androidx.viewpager.widget.ViewPager;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.asu.Adapters.SectionsPageAdapter;
-import com.example.asu.DomainModel.DMGroup;
-import com.example.asu.DomainModel.DMSetting;
 import com.example.asu.RowDataGateway.DBinitter;
 import com.example.asu.Fragments.Tab1Fragment;
-import com.example.asu.RowDataGateway.Lesson;
-import com.example.asu.RowDataGateway.User;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

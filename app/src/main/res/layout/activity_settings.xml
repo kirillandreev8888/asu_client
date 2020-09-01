@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingVertical="8dp"
@@ -48,7 +48,7 @@
             android:textOn="On"
             android:textSize="24sp"
             app:showText="true" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingVertical="8dp"
@@ -61,7 +61,7 @@
             android:textOn="On"
             android:textSize="24sp"
             app:showText="true" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingVertical="8dp"
@@ -74,7 +74,7 @@
             android:textOn="On"
             android:textSize="24sp"
             app:showText="true" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingVertical="8dp"
@@ -87,7 +87,7 @@
             android:textOn="On"
             android:textSize="24sp"
             app:showText="true" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingVertical="8dp"
@@ -100,7 +100,7 @@
             android:textOn="On"
             android:textSize="24sp"
             app:showText="true" />
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingVertical="8dp"

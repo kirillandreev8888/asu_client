@@ -3,8 +3,8 @@ package com.example.asu.Adapters;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.asu.DomainModel.DMGroup;
 import com.example.asu.DomainModel.DMLesson;
-import com.example.asu.MainActivity;
 import com.example.asu.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

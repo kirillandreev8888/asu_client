@@ -1,8 +1,8 @@
 package com.example.asu.Adapters;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.asu.DomainModel.DMSetting;
 import com.example.asu.Fragments.Tab1Fragment;
