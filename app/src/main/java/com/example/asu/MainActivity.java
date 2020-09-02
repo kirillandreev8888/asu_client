@@ -1,8 +1,12 @@
 package com.example.asu;
 
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.asu.DomainModel.DMLesson;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.viewpager.widget.ViewPager;
@@ -15,16 +19,30 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.asu.Adapters.SectionsPageAdapter;
 import com.example.asu.RowDataGateway.DBinitter;
 import com.example.asu.Fragments.Tab1Fragment;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabLayout tabLayout;
     public static OkHttpClient client = new OkHttpClient();
     public static final String BASE_URL = "http://10.0.2.2:8000/groups/";
+    Context context;
 
 
     @Override
@@ -41,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context = this;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -127,8 +147,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+//            startActivity(intent);
+            Request request = new Request.Builder()
+                    .url("https://asu-firebase.firebaseio.com/.json")
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    String res = response.body().string();
+//                    Log.e("QWE", res);
+                    List<DMLesson> list = new Gson().fromJson(res, new TypeToken<List<DMLesson>>() {
+                    }.getType());
+//                    if (list.size() == 0) {
+//                        ((Activity) context).runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Toast.makeText(context, "Нет занятий", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
+                    DMLesson.deleteAll();
+                    for (DMLesson lesson : list) {
+                        lesson.setILesson();
+                        lesson.ilesson.save();
+                    }
+//                    Instrumentation inst = new Instrumentation();
+//                    inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+//                    inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
