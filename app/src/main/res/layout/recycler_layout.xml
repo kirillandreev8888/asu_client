@@ -31,31 +31,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingHorizontal="8dp">
+            >
 
             <TextView
-                android:paddingLeft="5dp"
-                android:id="@+id/recyclerText2"
+                android:id="@+id/recyclerText3"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Аудитория"
+                android:text="Тип"
                 android:textAlignment="textStart"
                 android:textAppearance="@android:style/TextAppearance.Large" />
             <TextView
                 android:paddingLeft="5dp"
-                android:id="@+id/recyclerText3"
+                android:id="@+id/recyclerText2"
                 android:layout_width="wrap_content"
-                android:minWidth="60dp"
+                android:minWidth="75dp"
                 android:maxWidth="150dp"
                 android:layout_height="wrap_content"
-                android:text="Тип"
+                android:text="Аудитория"
                 android:textAlignment="textStart"
                 android:textAppearance="@android:style/TextAppearance.Large" />
 
         </LinearLayout>
 
-<!--TODO пофиксить как-нибудь разметку для длинных названий-->
+<!--TODO пофиксить как-нибудь кнопку, наезжающую на аудиторию-->
 
 
     </LinearLayout>

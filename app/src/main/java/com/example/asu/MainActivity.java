@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.asu.Custom.importedTimeCounter;
 import com.example.asu.DomainModel.DMLesson;
 import com.example.asu.DomainModel.DMSetting;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.viewpager.widget.ViewPager;
@@ -90,16 +92,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DBinitter dBinitter = new DBinitter(this);
 
         ImageButton weekSwitcher = findViewById(R.id.weekSwitcher);
-        weekSwitcher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int current = mViewPager.getCurrentItem();
-                int count = mViewPager.getAdapter().getCount() / 2;
-                if (current < count)
-                    mViewPager.setCurrentItem(current + count);
-                else
-                    mViewPager.setCurrentItem(current - count);
-            }
+        weekSwitcher.setOnClickListener(view -> {
+            int current = mViewPager.getCurrentItem();
+            int count = mViewPager.getAdapter().getCount() / 2;
+            if (current < count)
+                mViewPager.setCurrentItem(current + count);
+            else
+                mViewPager.setCurrentItem(current - count);
+        });
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(view ->
+                alert(importedTimeCounter.timeBeforeEnd()));
+        floatingActionButton.setOnLongClickListener(view -> {
+            centerOnDayOfWeek();
+            return true; //true тут, чтобы обычный OnClickListener не триггерился
         });
 
     }
@@ -115,24 +121,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentWeek = java.time.LocalDate.now().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) - //потом это обратно переводится в LocalDate
                 startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) + 1; //зато работает
         //конец нечитаемого кода
-        toolbar.setTitle("Неделя "+currentWeek+", "+isFirstWeekText());
+        toolbar.setTitle("Неделя "+currentWeek+", "+isFirstWeekText()); //TODO добавить что-нибудь с 17 неделей
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         tabLayout.setupWithViewPager(mViewPager);
         setupViewPager(mViewPager);
 
-        int dayOfWeek = java.time.LocalDate.now().getDayOfWeek().getValue();
-        DMSetting todaySetting = DMSetting.findOne("showday"+dayOfWeek);
-        if (todaySetting.checkShowDaySetting())
-            if(isFirstWeek())
-                mViewPager.setCurrentItem(DMSetting.getAllShownDays().indexOf(dayOfWeek)+1);
-            else
-                mViewPager.setCurrentItem(DMSetting.getAllShownDays().indexOf(dayOfWeek)+1+DMSetting.getAllShownDays().size());
-        if (!todaySetting.exists())
-            if(isFirstWeek())
-                mViewPager.setCurrentItem(dayOfWeek);
-            else
-                mViewPager.setCurrentItem(dayOfWeek+6);
+        centerOnDayOfWeek();//центрирование на текущем дне
     }
 
     @Override
@@ -259,12 +254,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void alert(String text) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-            }
-        });
+        runOnUiThread(() -> Toast.makeText(context, text, Toast.LENGTH_SHORT).show());
     }
 
     private boolean isFirstWeek(){
@@ -278,5 +268,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return "ЧС";
         else
             return "ЗН";
+    }
+
+    private void centerOnDayOfWeek(){
+        int dayOfWeek = java.time.LocalDate.now().getDayOfWeek().getValue();
+        DMSetting todaySetting = DMSetting.findOne("showday"+dayOfWeek); //проверка настройки текущего дня
+        if (todaySetting.checkShowDaySetting()) //день включен
+            if(isFirstWeek())
+                mViewPager.setCurrentItem(DMSetting.getAllShownDays().indexOf(dayOfWeek));
+            else
+                mViewPager.setCurrentItem(DMSetting.getAllShownDays().indexOf(dayOfWeek)+DMSetting.getAllShownDays().size());
+        if (!todaySetting.exists()) //настройки нет
+            if(isFirstWeek())
+                mViewPager.setCurrentItem(dayOfWeek-1);
+            else
+                mViewPager.setCurrentItem(dayOfWeek+6-1);
     }
 }
