@@ -2,6 +2,9 @@ package com.example.asu.DomainModel;
 
 import com.example.asu.RowDataGateway.Setting;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DMSetting {
 
     public int id;
@@ -24,6 +27,14 @@ public class DMSetting {
             this.value = "on";
         else
             this.value = "off";
+    }
+
+    public static List<Integer> getAllShownDays(){
+        List<Integer> res = new ArrayList<>();
+        for (int i=1; i<=6; i++)
+            if (DMSetting.findOne("showday"+i).checkShowDaySetting())
+                res.add(i);
+         return res;
     }
 
     public DMSetting() {

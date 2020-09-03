@@ -40,7 +40,8 @@ public class recyclerAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHold
             ((Item)viewHolder).imageView.setImageResource(lessons.get(i).pic);
         }
         ((Item)viewHolder).textView2.setText(lessons.get(i).classroom);
-        ((Item)viewHolder).textView3.setText(lessons.get(i).type);
+        ((Item)viewHolder).textView3.setText(lessons.get(i).type); //TODO сделать время до начала пары
+        //TODO сделать изменение цвета типа пары
     }
 
     @Override
