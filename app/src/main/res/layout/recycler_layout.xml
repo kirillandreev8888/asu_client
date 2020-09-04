@@ -17,16 +17,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
         <TextView
             android:id="@+id/recyclerText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Какая-то пара"
+            android:text="Какая-то пара с очень длинным названием"
             android:textAlignment="textStart"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:textSize="32sp" />
+            android:textSize="29sp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
