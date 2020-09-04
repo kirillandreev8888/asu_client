@@ -121,8 +121,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentWeek = java.time.LocalDate.now().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) - //потом это обратно переводится в LocalDate
                 startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) + 1; //зато работает
         //конец нечитаемого кода
-        toolbar.setTitle("Неделя "+currentWeek+", "+isFirstWeekText()); //TODO добавить что-нибудь с 17 неделей
-
+        if (currentWeek<0)
+            toolbar.setTitle("Неделя ???");
+        else if (currentWeek<=17)
+            toolbar.setTitle("Неделя "+currentWeek+", "+isFirstWeekText());
+        else
+            toolbar.setTitle("Неделя 17+"+(currentWeek-17));
         mViewPager = (ViewPager) findViewById(R.id.container);
         tabLayout.setupWithViewPager(mViewPager);
         setupViewPager(mViewPager);
