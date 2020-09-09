@@ -14,12 +14,13 @@ public class DMLesson {
     public String type;
     private int time;
     public int day;
+    public String teacher;
     //DM fields
     public int pic;
     //data
     public ILesson ilesson;
     public void setILesson() {
-        this.ilesson = new ILessonAdapter(this.name, this.classroom, this.type, this.time, this.day);
+        this.ilesson = new ILessonAdapter(this.name, this.classroom, this.type, this.time, this.day, this.teacher);
     }
     //get
 
@@ -38,6 +39,7 @@ public class DMLesson {
         this.type = lesson.type;
         this.time = lesson.time;
         this.day = lesson.day;
+        this.teacher = lesson.teacher;
         this.convertTimeToPic();
     }
 
@@ -52,7 +54,7 @@ public class DMLesson {
             return res;
         } catch (Exception e) {
             e.printStackTrace();
-            res.add(new DMLesson(new Lesson("Нет занятий", "", "", 0, day)));
+            res.add(new DMLesson(new Lesson("Нет занятий", "", "", 0, day,"")));
             return res;
         }
     }
@@ -100,6 +102,7 @@ public class DMLesson {
                 ", type='" + type + '\'' +
                 ", time=" + time +
                 ", day=" + day +
+                ", teacher=" + teacher +
                 '}';
     }
 }

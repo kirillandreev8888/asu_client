@@ -9,7 +9,7 @@ import com.example.asu.RowDataGateway.RowDataGatewayBase;
 
 public class DBinitter extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "asuDB";
 
 
@@ -26,7 +26,8 @@ public class DBinitter extends SQLiteOpenHelper {
                 "classroom text," +
                 "type text," +
                 "time integer," +
-                "day integer" +
+                "day integer," +
+                "teacher text" +
                 ")"
         );
 

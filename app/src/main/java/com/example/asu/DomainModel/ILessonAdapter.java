@@ -4,8 +4,8 @@ import com.example.asu.RowDataGateway.Lesson;
 
 public class ILessonAdapter extends Lesson implements ILesson{
 
-    public ILessonAdapter(String name, String classroom, String type, int time, int day) {
-        super(name, classroom, type, time, day);
+    public ILessonAdapter(String name, String classroom, String type, int time, int day, String teacher) {
+        super(name, classroom, type, time, day, teacher);
     }
 
     @Override

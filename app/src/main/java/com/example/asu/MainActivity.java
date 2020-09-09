@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    alert("ошибка соединения");
+                    alert("Ошибка соединения");
                 }
 
                 @Override

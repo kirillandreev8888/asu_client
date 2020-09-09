@@ -51,9 +51,13 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         ((Item) viewHolder).textView2.setText(lessons.get(i).classroom);
         ((Item) viewHolder).textView3.setText(lessons.get(i).type);
-        ((Item)viewHolder).textView3.setTextColor(getColor(lessons.get(i).type));
+        ((Item) viewHolder).textView3.setTextColor(getColor(lessons.get(i).type));
         ((Item) viewHolder).linearLayout.setOnClickListener(view -> {
-            alert(importedTimeCounter.timeBeforeLesson(lessons.get(i).getTime()-1));
+            alert(lessons.get(i).teacher);
+        });
+        ((Item) viewHolder).linearLayout.setOnLongClickListener(view1 -> {
+            alert(importedTimeCounter.timeBeforeLesson(lessons.get(i).getTime() - 1));
+            return true;
         });
     }
 
@@ -84,14 +88,18 @@ public class recyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    public int getColor(String type){
-        switch (type){
-            case "Лекция": return Color.parseColor("#834d18");
-            case "Семинар": return Color.parseColor("#000080");
+    public int getColor(String type) {
+        switch (type) {
+            case "Лекция":
+                return Color.parseColor("#834d18");
+            case "Семинар":
+                return Color.parseColor("#000080");
             case "Лаба":
             case "Лаб":
-            case "Лабораторная": return Color.RED;
-            default: return Color.BLACK;
+            case "Лабораторная":
+                return Color.RED;
+            default:
+                return Color.BLACK;
         }
 
     }
